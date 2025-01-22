@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:utip/widgets/person_counter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,10 +27,27 @@ class UTip extends StatefulWidget {
 }
 
 class _UTipState extends State<UTip> {
+  int _personCount = 1;
+
+  //Metodos
+
+  void _decrement() {
+    setState(() {
+      if (_personCount > 0) {
+        _personCount--;
+      }
+    });
+  }
+
+  void _increment() {
+    setState(() {
+      _personCount++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-
     final style = theme.textTheme.titleMedium?.copyWith(
       color: theme.colorScheme.onPrimary,
       fontWeight: FontWeight.bold,
@@ -65,8 +83,6 @@ class _UTipState extends State<UTip> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                width: 100,
-                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
@@ -86,7 +102,13 @@ class _UTipState extends State<UTip> {
                       onChanged: (String value) {
                         print("The value is $value");
                       },
-                    )
+                    ),
+                    //Split
+                    PersonCount(
+                        theme: theme,
+                        personCount: _personCount,
+                        onIncrement: _increment,
+                        onDecrement: _decrement),
                   ],
                 ),
               ),
